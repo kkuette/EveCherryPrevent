@@ -11,7 +11,7 @@ class Belt:
         'Colossal' : self.Colossal()
         }
 
-    def calcDistrib(self):
+    """def calcDistrib(self):
         distrib = {}
         for idx, value in self.raw.items():
             tmp = {}
@@ -35,7 +35,7 @@ class Belt:
             nb_belt += 1
         for idx, value in avg_distrib.items():
             avg_distrib[idx] = value / nb_belt
-        return avg_distrib
+        return avg_distrib"""
 
     def Small(self):
         _Small = {
