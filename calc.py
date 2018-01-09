@@ -7,16 +7,20 @@ usr = User("KKuette")
 class Calc:
 
     def __init__(self, distrib):
-        self.rare = ['Arkonor', 'Bistot', 'Gneiss', 'Crokite']
-        self.raw_value = self.clacRawValue(distrib)
+        self.cherry = ['Arkonor', 'Bistot', 'Gneiss', 'Crokite']
+        self.dirty = ['Spodumain', 'Dark Ochre', 'Mercoxit']
+        self.raw_value = self.clacRawValue(self.calcRedistrib(distrib))
+
+    def calcRedistrib(self, distrib):
+        for idx, value in distrib.items():
+            distrib[idx] = (value / 1) / 2
+        return distrib
 
     def clacRawValue(self, distrib):
         raw_value = {}
         for idx, value in distrib.items():
-            if idx in self.rare:
+            if idx in self.cherry:
                 raw_value[idx] = -value
-            elif idx is 'Mercoxit':
-                raw_value[idx] = 1
             else:
                 raw_value[idx] =  value
         for idx, value in raw_value.items():
@@ -33,6 +37,7 @@ class Calc:
 print ("\n### Reward value per unit ###\n")
 distrib = belt.calcAvgDistrib()
 extracted = belt.raw['Colossal']
+
 calc = Calc(distrib)
 print ("")
 print ("### Total reward ###\n")
