@@ -14,9 +14,13 @@ class Calc:
         raw_value = {}
         for idx, value in distrib.items():
             if idx in self.rare:
-                raw_value[idx] = 1 - value
+                raw_value[idx] = -value
+            elif idx is 'Mercoxit':
+                raw_value[idx] = 1
             else:
-                raw_value[idx] = value
+                raw_value[idx] =  value
+        for idx, value in raw_value.items():
+            print (idx, ":", value)
         return raw_value
 
     def calcReward(self, extracted):
@@ -26,6 +30,10 @@ class Calc:
                 reward += value * self.raw_value[idx]
         return reward
 
+print ("\n### Reward value per unit ###\n")
 distrib = belt.calcAvgDistrib()
+extracted = belt.raw['Colossal']
 calc = Calc(distrib)
-print (calc.calcReward(belt.raw['Colossal']))
+print ("")
+print ("### Total reward ###\n")
+print (calc.calcReward(extracted))
