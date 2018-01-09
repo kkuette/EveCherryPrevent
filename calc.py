@@ -1,14 +1,11 @@
 from belt import Belt
 from user import User
 
-belt = Belt()
-usr = User("KKuette")
-
 class Calc:
 
     def __init__(self, distrib):
-        self.cherry = ['Arkonor', 'Bistot', 'Gneiss', 'Crokite', 'Spodumain',  'Mercoxit']
-        self.dirty = ['Dark Ochre']
+        self.cherry = ['Arkonor', 'Bistot', 'Gneiss', 'Crokite']
+        self.dirty = ['Dark Ochre', 'Spodumain', 'Mercoxit']
         self.raw_value = self.clacRawValue(self.calcRedistrib(distrib))
 
     def calcDistribDirty(self, distrib):
@@ -26,11 +23,13 @@ class Calc:
     def calcRedistrib(self, distrib):
         self.calcDistribDirty(distrib)
         self.calcDistribCherry(distrib)
+        print ("\n### Distrib value of categories before redistrib###\n")
+        print ("cherry", self.dist_cherry, "dirty", self.dist_dirty, "\n")
         for idx, value in distrib.items():
             if idx in self.dirty:
-                distrib[idx] = (value / (self.dist_dirty)) / 2
+                distrib[idx] = (value / self.dist_dirty) / 2
             else:
-                distrib[idx] = (value / (self.dist_cherry)) / 2
+                distrib[idx] = (value / self.dist_cherry) / 2
 
         c = 0
         d = 0
@@ -39,7 +38,7 @@ class Calc:
                 c += value
             else:
                 d += value
-        print ("\n### Distrib value of categories ###\n")
+        print ("### Distrib value of categories after redistrib###\n")
         print ("cherry", c, "dirty", d, "\n")
         print ("### Reward value per unit ###\n")
         return distrib
@@ -62,15 +61,17 @@ class Calc:
             if idx is not "Total":
                 reward += value * self.raw_value[idx]
                 print (idx, ":", value)
-        print ("")
-        print ("### Total reward ###\n")
+        print ("\n### Total reward ###\n")
         return reward
 
+belt = Belt() # Init belt values
+distrib = belt.calcAvgDistrib() # Calc average distribution from belt values
 
-distrib = belt.calcAvgDistrib()
-extracted = belt.raw['Colossal']
-extracted['Spodumain'] = 0
-calc = Calc(distrib)
+calc = Calc(distrib) # Init calc object with average distribution
 
+usr = User("KKuette") # Init user
 
-print (calc.calcReward(extracted))
+extracted = belt.raw['Small'] # Normaly it will get user extraction info
+#extracted['Gneiss'] = 0
+
+print (calc.calcReward(extracted)) # Calc reward from user extraction info
