@@ -11,10 +11,6 @@ class Calc:
         self.id_tot = {}
         self.reward = 0
 
-    def calc_idValue(self):
-        for ID in raw:
-            self.id_value[ID] = ID[raw_qty_in_belt] / tot_raw_qty_in_belt
-
     def clac_idTotPts(self, extracted):
         exctracted as dict
         for id, value in extracted:
