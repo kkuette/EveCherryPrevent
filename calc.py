@@ -52,7 +52,6 @@ calc = Calc(basic) # Init calc object with average distribution
 
 usr = User("KKuette") # Init user
 
-
 #extracted['Gneiss'] = 0
 
 print (calc.calcReward(extracted)) # Calc reward from user extraction info
