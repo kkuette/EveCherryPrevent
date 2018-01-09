@@ -71,7 +71,7 @@ calc = Calc(distrib) # Init calc object with average distribution
 
 usr = User("KKuette") # Init user
 
-extracted = belt.raw['Small'] # Normaly it will get user extraction info
+extracted = belt.avg_raw # Normaly it will get user extraction info
 #extracted['Gneiss'] = 0
 
 print (calc.calcReward(extracted)) # Calc reward from user extraction info
