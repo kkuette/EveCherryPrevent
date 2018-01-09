@@ -1,7 +1,8 @@
+''' Ore Qty need to be updated '''
+
 class Belt:
 
     def __init__(self):
-        ''' Ore Qty need to be updated '''
         self.raw = {
         'Small' : self.Small(),
         'Medium' : self.Medium(),
