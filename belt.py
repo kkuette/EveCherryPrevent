@@ -11,51 +11,6 @@ class Belt:
         'Colossal' : self.Colossal()
         }
 
-        self.avg_raw = self.calcAvgRaw()
-
-    def calcAvgRaw(self):
-        _avg_raw = {}
-        nb_belt = 0
-        for idx, value in self.raw.items():
-            for i, v in value.items():
-                if i is not "Total":
-                    if nb_belt > 0:
-                        _avg_raw[i] += v
-                    else:
-                        _avg_raw[i] = v
-            nb_belt += 1
-        tot = 0
-        for idx, value in _avg_raw.items():
-            tot += value
-        _avg_raw['Total'] = tot
-        return _avg_raw
-
-    def calcDistrib(self):
-        distrib = {}
-        for idx, value in self.raw.items():
-            tmp = {}
-            for i, v in value.items():
-                if i is not "Total":
-                    tmp[i] = v / value['Total']
-            distrib[idx] = tmp
-        return distrib
-
-    def calcAvgDistrib(self):
-        distrib = self.calcDistrib()
-        avg_distrib = {}
-        nb_belt = 0
-        for idx, value in distrib.items():
-            for i, v in value.items():
-                if i is not "Total":
-                    if nb_belt > 0:
-                        avg_distrib[i] += v
-                    else:
-                        avg_distrib[i] = v
-            nb_belt += 1
-        for idx, value in avg_distrib.items():
-            avg_distrib[idx] = value / nb_belt
-        return avg_distrib
-
     def Small(self):
         _Small = {
         'Arkonor' : 9600,
