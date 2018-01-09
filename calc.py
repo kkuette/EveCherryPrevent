@@ -2,24 +2,30 @@ from belt import Belt
 from user import User
 
 belt = Belt()
-'''
+usr = User("KKuette")
+
 class Calc:
 
-    def __init__(self):
+    def __init__(self, distrib):
         self.rare = ['Arkonor', 'Bistot', 'Gneiss', 'Crokite']
-        self.id_value = {}
-        self.id_tot = {}
-        self.reward = 0
+        self.raw_value = self.clacRawValue(distrib)
 
-    def clac_idTotPts(self, extracted):
-        exctracted as dict
-        for id, value in extracted:
-            self.id_tot[id] = self.id_value[id] * value
-
-    def clacReward(self):
-        for id, value in self.id_tot.items():
-            if id in self.rare:
-                self.reward -= value + 1
+    def clacRawValue(self, distrib):
+        raw_value = {}
+        for idx, value in distrib.items():
+            if idx in self.rare:
+                raw_value[idx] = 1 - value
             else:
-                self.reward += value
-'''
+                raw_value[idx] = value
+        return raw_value
+
+    def calcReward(self, extracted):
+        reward = 0
+        for idx, value in extracted.items():
+            if idx is not "Total":
+                reward += value * self.raw_value[idx]
+        return reward
+
+distrib = belt.calcAvgDistrib()
+calc = Calc(distrib)
+print (calc.calcReward(belt.raw['Colossal']))
