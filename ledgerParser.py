@@ -3,6 +3,7 @@ oreNames = ["Arkonor", "Bistot", "Crokite", "Ochre", "Gneiss", "Spodumain", "Mer
 def parseLedger(ledger):
     ledgerData = {}
     lines = ledger.splitlines()
+    print (lines)
     for line in lines:
         lineId = ""
         parts = line.split("    ")
@@ -19,3 +20,25 @@ def parseLedger(ledger):
         except:
             ledgerData[lineId] = qt
     return ledgerData
+
+def parseLedgerV2(ledger):
+    data = {}
+    lines = ledger.split("\n")
+    raw = 0
+    for line in lines:
+        if "" != line:
+            line = ((line.replace("\xa0", "")).replace("Â", "")).replace("*", "")
+            l = line.split("\t")
+            try:
+                l[1] = l[1].split(" ")[2]
+            except:
+                l[1] = l[1].replace(" ", "")
+            if l[1] == "Ochre":
+                l[1] = "Dark Ochre"
+            if l[1] in oreNames:
+                print (l[1], l[2])
+                try:
+                    data[l[1]] += int(l[2])
+                except:
+                    data[l[1]] = int(l[2])
+    return data
