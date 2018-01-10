@@ -114,7 +114,6 @@ if __name__=='__main__':
     from ledgerParser import parseLedgerV2
     f = open("rawtest.txt", 'r')
     ledger = f.read()
-    print (type(ledger))
     start = time.time()
     us = UserStorage()
     belt = ORE() # Init belt values

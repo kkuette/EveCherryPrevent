@@ -1,4 +1,4 @@
-oreNames = ["Arkonor", "Bistot", "Crokite", "Ochre", "Gneiss", "Spodumain", "Mercoxit"]
+oreNames = ["Arkonor", "Bistot", "Crokite", "Dark Ochre", "Gneiss", "Spodumain", "Mercoxit"]
 
 def parseLedger(ledger):
     ledgerData = {}
@@ -36,7 +36,6 @@ def parseLedgerV2(ledger):
             if l[1] == "Ochre":
                 l[1] = "Dark Ochre"
             if l[1] in oreNames:
-                print (l[1], l[2])
                 try:
                     data[l[1]] += int(l[2])
                 except:
