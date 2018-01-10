@@ -59,6 +59,7 @@ class Calc:
         self.coefficients = {key: value['Volume'] for (key, value) in ore.items()}
         for idx, value in self.distrib.items():
             self.coefficients[idx] /= value
+            self.coefficients[idx] *= ore[idx]['Weights']
 
     def calcDenoms(self):
         self.sumCherry = 0

@@ -131,6 +131,7 @@ class ORE(Belt):
 
     def Arkonor(self):
         _Arkonor = {
+        'Weight': 1, # Add a custom weights, default does no effect
         'Volume': 16,
         'IskValueRaw': 0
         }
@@ -138,6 +139,7 @@ class ORE(Belt):
 
     def Bistot(self):
         _Bistot = {
+        'Weight': 1, # Add a custom weights, default does no effect
         'Volume': 16,
         'IskValueRaw': 0
         }
@@ -145,6 +147,7 @@ class ORE(Belt):
 
     def Crokite(self):
         _Crokite = {
+        'Weight': 1, # Add a custom weights, default does no effect
         'Volume': 16,
         'IskValueRaw': 0
         }
@@ -152,6 +155,7 @@ class ORE(Belt):
 
     def Dark_Ochre(self):
         _Dark_Ochre = {
+        'Weight': 1, # Add a custom weights, default does no effect
         'Volume': 8,
         'IskValueRaw': 0
         }
@@ -159,6 +163,7 @@ class ORE(Belt):
 
     def Gneiss(self):
         _Gneiss = {
+        'Weight': 1, # Add a custom weights, default does no effect
         'Volume': 5,
         'IskValueRaw': 0
         }
@@ -166,6 +171,7 @@ class ORE(Belt):
 
     def Spodumain(self):
         _Spodumain = {
+        'Weight': 1, # Add a custom weights, default does no effect
         'Volume': 16,
         'IskValueRaw': 0
         }
@@ -173,6 +179,7 @@ class ORE(Belt):
 
     def Mercoxit(self):
         _Mercoxit = {
+        'Weight': 1, # Add a custom weights, default does no effect
         'Volume': 40,
         'IskValueRaw': 0
         }
