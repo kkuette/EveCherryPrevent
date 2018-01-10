@@ -21,10 +21,6 @@ class Belt:
         'Spodumain' : 300000,
         'Mercoxit' : 0
         }
-        tot = 0
-        for idx, value in _Small.items():
-            tot += value
-        _Small['Total'] = tot
         return _Small
 
     def Medium(self):
@@ -37,10 +33,6 @@ class Belt:
         'Spodumain' : 270000,
         'Mercoxit' : 2600
         }
-        tot = 0
-        for idx, value in _Medium.items():
-            tot += value
-        _Medium['Total'] = tot
         return _Medium
 
     def Large(self):
@@ -53,10 +45,6 @@ class Belt:
         'Spodumain' : 368100,
         'Mercoxit' : 3500
         }
-        tot = 0
-        for idx, value in _Large.items():
-            tot += value
-        _Large['Total'] = tot
         return _Large
 
     def Enormous(self):
@@ -69,10 +57,6 @@ class Belt:
         'Spodumain' : 542000,
         'Mercoxit' : 5200
         }
-        tot = 0
-        for idx, value in _Enormous.items():
-            tot += value
-        _Enormous['Total'] = tot
         return _Enormous
 
     def Colossal(self):
@@ -85,8 +69,60 @@ class Belt:
         'Spodumain' : 736200,
         'Mercoxit' : 7000
         }
-        tot = 0
-        for idx, value in _Colossal.items():
-            tot += value
-        _Colossal['Total'] = tot
         return _Colossal
+
+class ORE(Belt):
+
+    def __init__(self):
+        Belt.__init__(self)
+        self._ore = {
+        'Arkonor': self.Arkonor(),
+        'Bistot': self.Bistot(),
+        'Crokite': self.Crokite(),
+        'Dark Ochre': self.Dark_Ochre(),
+        'Gneiss': self.Gneiss(),
+        'Spodumain': self.Spodumain(),
+        'Mercoxit': self.Mercoxit()
+        }
+
+    def Arkonor(self):
+        _Arkonor = {
+        'Volume': 16
+        }
+        return _Arkonor
+
+    def Bistot(self):
+        _Bistot = {
+        'Volume': 16
+        }
+        return _Bistot
+
+    def Crokite(self):
+        _Crokite = {
+        'Volume': 16
+        }
+        return _Crokite
+
+    def Dark_Ochre(self):
+        _Dark_Ochre = {
+        'Volume': 8
+        }
+        return _Dark_Ochre
+
+    def Gneiss(self):
+        _Gneiss = {
+        'Volume': 5
+        }
+        return _Gneiss
+
+    def Spodumain(self):
+        _Spodumain = {
+        'Volume': 16
+        }
+        return _Spodumain
+
+    def Mercoxit(self):
+        _Mercoxit = {
+        'Volume': 40
+        }
+        return _Mercoxit
