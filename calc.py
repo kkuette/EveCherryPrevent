@@ -24,7 +24,7 @@ class Calc:
     def calcCoef(self, weights):
         self.coefficients = {key: value['Volume'] for (key, value) in weights.items()}
         for idx, value in self.distrib.items():
-            self.coefficients[idx] *= value
+            self.coefficients[idx] /= value
 
     def calcDenoms(self):
         self.sumCherry = 0
@@ -63,13 +63,13 @@ for idx, value in basic.items():
     basic[idx] /= nb_belt
 
 # Normally it will get user extraction info
-extracted = basic
-#extracted['Dark Ochre'] = 0
+extracted = belt.raw['Colossal']
+
 
 calc = Calc(belt._ore, basic) # Init calc object with average distribution
 
 usr = User("KKuette") # Init user
 
 #extracted['Gneiss'] = 0
-
+extracted['Mercoxit'] = 0
 print (calc.calcReward(extracted)) # Calc reward from user extraction info
