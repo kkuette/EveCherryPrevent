@@ -1,5 +1,7 @@
 ''' Ore Qty need to be updated '''
 
+from collections import Counter
+
 class Belt:
 
     def __init__(self):
@@ -11,6 +13,16 @@ class Belt:
         'Colossal' : self.Colossal()
         }
 
+    def AvgBeltQuantity(self):
+        basic = Counter()
+        nb_belt = 0
+        for i, v in self.raw.items():
+            basic += Counter(v)
+            nb_belt += 1
+        for idx, value in basic.items():
+            basic[idx] /= nb_belt
+        return basic
+
     def Small(self):
         _Small = {
         'Arkonor' : 9600,
@@ -21,10 +33,6 @@ class Belt:
         'Spodumain' : 300000,
         'Mercoxit' : 0
         }
-        tot = 0
-        for idx, value in _Small.items():
-            tot += value
-        _Small['Total'] = tot
         return _Small
 
     def Medium(self):
@@ -37,10 +45,6 @@ class Belt:
         'Spodumain' : 270000,
         'Mercoxit' : 2600
         }
-        tot = 0
-        for idx, value in _Medium.items():
-            tot += value
-        _Medium['Total'] = tot
         return _Medium
 
     def Large(self):
@@ -53,10 +57,6 @@ class Belt:
         'Spodumain' : 368100,
         'Mercoxit' : 3500
         }
-        tot = 0
-        for idx, value in _Large.items():
-            tot += value
-        _Large['Total'] = tot
         return _Large
 
     def Enormous(self):
@@ -69,10 +69,6 @@ class Belt:
         'Spodumain' : 542000,
         'Mercoxit' : 5200
         }
-        tot = 0
-        for idx, value in _Enormous.items():
-            tot += value
-        _Enormous['Total'] = tot
         return _Enormous
 
     def Colossal(self):
@@ -85,8 +81,99 @@ class Belt:
         'Spodumain' : 736200,
         'Mercoxit' : 7000
         }
-        tot = 0
-        for idx, value in _Colossal.items():
-            tot += value
-        _Colossal['Total'] = tot
         return _Colossal
+
+class ORE(Belt):
+
+    def __init__(self):
+        Belt.__init__(self)
+        self._ore = {
+        'Arkonor': self.Arkonor(),
+        'Bistot': self.Bistot(),
+        'Crokite': self.Crokite(),
+        'Dark Ochre': self.Dark_Ochre(),
+        'Gneiss': self.Gneiss(),
+        'Spodumain': self.Spodumain(),
+        'Mercoxit': self.Mercoxit()
+        }
+        self._ore_name = [idx for idx, _ in self._ore.items()]
+
+    def getVolume(self, ore):
+        if ore == "All":
+            lst = []
+            for idx, value in self._ore.items():
+                lst.append([idx, value['Volume']])
+            return lst
+        elif ore in self._ore_name:
+            return self._ore[ore]['Volume']
+        else:
+            print ("%s not found" % ore)
+
+    def getIskValueRaw(self, ore):
+        if ore == "All":
+            lst = []
+            for idx, value in self._ore.items():
+                lst.append([idx, value['IskValueRaw']])
+            return lst
+        elif ore in self._ore_name:
+            return self._ore[ore]['IskValueRaw']
+        else:
+            print ("%s not found" % ore)
+
+    def setIskValueRaw(self, ore, value):
+        if ore in self._ore_name:
+            if type(value) is not (str or list or dict):
+                self._ore[ore]['IskValueRaw'] = value
+            else:
+                print ("%s not valid" % type(value))
+        else:
+            print ("%s not found" % ore)
+
+    def Arkonor(self):
+        _Arkonor = {
+        'Volume': 16,
+        'IskValueRaw': 0
+        }
+        return _Arkonor
+
+    def Bistot(self):
+        _Bistot = {
+        'Volume': 16,
+        'IskValueRaw': 0
+        }
+        return _Bistot
+
+    def Crokite(self):
+        _Crokite = {
+        'Volume': 16,
+        'IskValueRaw': 0
+        }
+        return _Crokite
+
+    def Dark_Ochre(self):
+        _Dark_Ochre = {
+        'Volume': 8,
+        'IskValueRaw': 0
+        }
+        return _Dark_Ochre
+
+    def Gneiss(self):
+        _Gneiss = {
+        'Volume': 5,
+        'IskValueRaw': 0
+        }
+        return _Gneiss
+
+    def Spodumain(self):
+        _Spodumain = {
+        'Volume': 16,
+        'IskValueRaw': 0
+        }
+        return _Spodumain
+
+    def Mercoxit(self):
+        _Mercoxit = {
+        'Volume': 40,
+        'IskValueRaw': 0
+        }
+        return _Mercoxit
