@@ -5,13 +5,46 @@ from collections import Counter
 
 class Calc:
 
-    def __init__(self, weights, distrib):
-        self.distrib = self.calcDistrib(distrib)
-        self.calcCoef(weights)
+    def __init__(self, ore, avg_belt_quantity):
+        '''ore: dict composed of all ORE volume
+           distrib: average ORE quantity in belt'''
+
+        self.distrib = self.calcDistrib(avg_belt_quantity)
+        self.ore = ore
+        self.calcCoef(ore)
         self.cherry = ['Arkonor', 'Bistot', 'Gneiss', 'Crokite']
         self.dirty = ['Dark Ochre', 'Spodumain', 'Mercoxit']
+        self.extracted_volume = 0
+        self.extracted_isk_value = 0
+
+    def getExtractedVolume(self, name):
+        ''' If calcReward not called extracted volume value is 0
+        All: return list of all component Volume'''
+        if self.extracted_volume == 0:
+            return 0
+        if name == "All":
+            lst = []
+            for idx, value in self.exracted_volume.items():
+                lst.append([idx, value])
+            return lst
+        else:
+            return self.extracted_volume[name]
+
+    def getExtractedIskValue(self, name):
+        ''' If calcReward not called extracted volume value is 0
+        All: return list of all component Volume'''
+        if self.extracted_isk_value == 0:
+            return 0
+        if name == "All":
+            lst = []
+            for idx, value in self.exracted_isk.items():
+                lst.append([idx, value])
+            return lst
+        else:
+            return self.extracted_isk_value[name]
 
     def calcDistrib(self, distrib):
+        ''' Calc distribution of average ore quantity in belt'''
         total = 0
         _distrib = {}
         for idx, value in distrib.items():
@@ -21,8 +54,9 @@ class Calc:
         return _distrib
 
 
-    def calcCoef(self, weights):
-        self.coefficients = {key: value['Volume'] for (key, value) in weights.items()}
+    def calcCoef(self, ore):
+        ''' Calc coefficient based on ORE volume / ORE distribution'''
+        self.coefficients = {key: value['Volume'] for (key, value) in ore.items()}
         for idx, value in self.distrib.items():
             self.coefficients[idx] /= value
 
@@ -36,6 +70,7 @@ class Calc:
                 self.sumDirty += v * self.coefficients[i]
 
     def calcReward(self, extracted):
+        '''Calc extraction reward based on coefficient * extracted quantity'''
         rewardCherry = 0
         rewardDirty = 0
         self.calcDenoms()
@@ -50,26 +85,36 @@ class Calc:
         print(rewardDirty)
         print ("\n### Total reward ###\n")
         #oef = 10000
+        self.extracted_volume = self.calcExtractedVolume(extracted)
+        self.extracted_isk_value = self.calcExtractedIskValue(extracted)
         return int(rewardDirty-rewardCherry)
+
+    def calcExtractedVolume(self, extracted):
+        '''Calc extracted volume based on extracted quantity * ORE Volume'''
+        _volume = {}
+        total = 0
+        for idx, value in extracted.items():
+            _volume[idx] = value * self.ore[idx]['Volume']
+            total += _volume[idx]
+        _volume['Total'] = total
+        return _volume
+
+    def calcExtractedIskValue(self, extracted):
+        _isk_value = {}
+        total = 0
+        for idx, value in extracted.items():
+            _isk_value[idx] = value * self.ore[idx]['IskValue']
+            total += _isk_value[idx]
+        _isk_value['Total'] = total
+        return _isk_value
+
 
 belt = ORE() # Init belt values
 
-basic = Counter()
-nb_belt = 0
-for i, v in belt.raw.items():
-    basic += Counter(v)
-    nb_belt += 1
-for idx, value in basic.items():
-    basic[idx] /= nb_belt
+extracted = belt.raw['Colossal']# Normally it will get user extraction info
 
-# Normally it will get user extraction info
-extracted = belt.raw['Colossal']
-
-
-calc = Calc(belt._ore, basic) # Init calc object with average distribution
+calc = Calc(belt._ore, belt.AvgBeltQuantity()) # Init calc object with average distribution
 
 usr = User("KKuette") # Init user
 
-#extracted['Gneiss'] = 0
-extracted['Mercoxit'] = 0
 print (calc.calcReward(extracted)) # Calc reward from user extraction info
