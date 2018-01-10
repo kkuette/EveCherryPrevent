@@ -111,10 +111,13 @@ class Calc:
 
 if __name__=='__main__':
     import time
+    from ledgerParser import parseLedger
+    f = open("rawtest.txt", 'r')
+    ledger = f.read()
     start = time.time()
     us = UserStorage()
     belt = ORE() # Init belt values
-    extracted = belt.AvgBeltQuantity() # Normally it will get user extraction info
+    extracted = parseLedger(ledger) # Normally it will get user extraction info
     calc = Calc(belt._ore, belt.AvgBeltQuantity()) # Init calc object with average distribution
     for user in ['Kkuette', 'Alastyel']:
         usr = User(user) # Init user
