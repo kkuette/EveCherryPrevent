@@ -1,5 +1,5 @@
 from belt import ORE, Belt
-from user import User
+from user import User, UserStorage
 
 from collections import Counter
 
@@ -31,8 +31,8 @@ class Calc:
             return self.extracted_volume[name]
 
     def getExtractedIskValue(self, name):
-        ''' If calcReward not called extracted volume value is 0
-        All: return list of all component Volume'''
+        ''' If calcReward not called extracted isk value value is 0
+        All: return list of all component isk value'''
         if self.extracted_isk_value == 0:
             return 0
         if name == "All":
@@ -81,9 +81,9 @@ class Calc:
                 rewardDirty += value * self.coefficients[idx]
         rewardCherry /= self.sumCherry
         rewardDirty /= self.sumDirty
-        print(rewardCherry)
-        print(rewardDirty)
-        print ("\n### Total reward ###\n")
+        #print(rewardCherry)
+        #print(rewardDirty)
+        #print ("\n### Total reward ###\n")
         #oef = 10000
         self.extracted_volume = self.calcExtractedVolume(extracted)
         self.extracted_isk_value = self.calcExtractedIskValue(extracted)
@@ -103,18 +103,25 @@ class Calc:
         _isk_value = {}
         total = 0
         for idx, value in extracted.items():
-            _isk_value[idx] = value * self.ore[idx]['IskValue']
+            _isk_value[idx] = value * self.ore[idx]['IskValueRaw']
             total += _isk_value[idx]
         _isk_value['Total'] = total
         return _isk_value
 
 
-belt = ORE() # Init belt values
+if __name__=='__main__':
+    import time
+    start = time.time()
+    us = UserStorage()
+    belt = ORE() # Init belt values
+    extracted = belt.AvgBeltQuantity() # Normally it will get user extraction info
+    calc = Calc(belt._ore, belt.AvgBeltQuantity()) # Init calc object with average distribution
+    for user in ['Kkuette', 'Alastyel']:
+        usr = User(user) # Init user
+        usr.setExtracted(extracted)
+        usr.setReward(calc.calcReward(extracted)) # Calc reward from user extraction info
+        us.addUser(usr)
 
-extracted = belt.raw['Colossal']# Normally it will get user extraction info
-
-calc = Calc(belt._ore, belt.AvgBeltQuantity()) # Init calc object with average distribution
-
-usr = User("KKuette") # Init user
-
-print (calc.calcReward(extracted)) # Calc reward from user extraction info
+    for user in us.users:
+        print (user.name, user.getExtracted(), user.getReward())
+    print ("exec time : %s sec" % '{:.4}'.format(time.time() - start))

@@ -96,6 +96,7 @@ class ORE(Belt):
         'Spodumain': self.Spodumain(),
         'Mercoxit': self.Mercoxit()
         }
+        self._ore_name = [idx for idx, _ in self._ore.items()]
 
     def getVolume(self, ore):
         if ore == "All":
@@ -103,8 +104,10 @@ class ORE(Belt):
             for idx, value in self._ore.items():
                 lst.append([idx, value['Volume']])
             return lst
-        else:
+        elif ore in self._ore_name:
             return self._ore[ore]['Volume']
+        else:
+            print ("%s not found" % ore)
 
     def getIskValueRaw(self, ore):
         if ore == "All":
@@ -112,11 +115,19 @@ class ORE(Belt):
             for idx, value in self._ore.items():
                 lst.append([idx, value['IskValueRaw']])
             return lst
-        else:
+        elif ore in self._ore_name:
             return self._ore[ore]['IskValueRaw']
+        else:
+            print ("%s not found" % ore)
 
     def setIskValueRaw(self, ore, value):
-        self._ore[ore]['IskValueRaw'] = value
+        if ore in self._ore_name:
+            if type(value) is not (str or list or dict):
+                self._ore[ore]['IskValueRaw'] = value
+            else:
+                print ("%s not valid" % type(value))
+        else:
+            print ("%s not found" % ore)
 
     def Arkonor(self):
         _Arkonor = {
